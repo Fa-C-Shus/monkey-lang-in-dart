@@ -1,0 +1,9 @@
+very_good create dart_cli monkeydart --description "Thorsten Ball monkey interpreter written in Dart" --publishable --executable-name mkay
+
+dart pub add equatable 
+
+git init
+git add . && git commit -m "Empty starter project"
+
+git remote add origin git@github.com:Fa-C-Shus/monkey-lang-in-dart
+git push -u origin main
