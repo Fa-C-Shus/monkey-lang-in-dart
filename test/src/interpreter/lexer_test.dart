@@ -17,11 +17,16 @@ import 'package:test/test.dart';
 void main() {
   group('lexer', () {
     late Logger logger;
-    late Map<String, List<Token>> tests;
+    late Map<String, List<Token>> positiveTests;
+    late Map<String, List<Token>> negativeTests;
 
     setUp(() {
       logger = Logger();
-      tests = {
+      // ~ is an illegal token
+      negativeTests = {
+        '~': [const Token.illegal()]
+      };
+      positiveTests = {
         '=+(){},;': [
           const Token.assign(),
           const Token.plus(),
@@ -39,20 +44,20 @@ let ten = 10;
      x + y;
 };
    let result = add(five, ten);''': [
-          Token.let(),
+          const Token.let(),
           const Token.ident('five'),
           const Token.assign(),
           const Token.int('5'),
           const Token.semicolon(),
-          Token.let(),
+          const Token.let(),
           const Token.ident('ten'),
           const Token.assign(),
           const Token.int('10'),
           const Token.semicolon(),
-          Token.let(),
+          const Token.let(),
           const Token.ident('add'),
           const Token.assign(),
-          Token.function(),
+          const Token.function(),
           const Token.lParen(),
           const Token.ident('x'),
           const Token.comma(),
@@ -65,7 +70,7 @@ let ten = 10;
           const Token.semicolon(),
           const Token.rSquirly(),
           const Token.semicolon(),
-          Token.let(),
+          const Token.let(),
           const Token.ident('result'),
           const Token.assign(),
           const Token.ident('add'),
@@ -75,7 +80,7 @@ let ten = 10;
           const Token.ident('ten'),
           const Token.rParen(),
           const Token.semicolon(),
-          Token.eof(),
+          const Token.eof(),
         ],
         '''
 let five = 5;
@@ -96,20 +101,20 @@ let ten = 10;
 10 == 10; 
 10 != 9;
 ''': [
-          Token.let(),
+          const Token.let(),
           const Token.ident('five'),
           const Token.assign(),
           const Token.int('5'),
           const Token.semicolon(),
-          Token.let(),
+          const Token.let(),
           const Token.ident('ten'),
           const Token.assign(),
           const Token.int('10'),
           const Token.semicolon(),
-          Token.let(),
+          const Token.let(),
           const Token.ident('add'),
           const Token.assign(),
-          Token.function(),
+          const Token.function(),
           const Token.lParen(),
           const Token.ident('x'),
           const Token.comma(),
@@ -122,7 +127,7 @@ let ten = 10;
           const Token.semicolon(),
           const Token.rSquirly(),
           const Token.semicolon(),
-          Token.let(),
+          const Token.let(),
           const Token.ident('result'),
           const Token.assign(),
           const Token.ident('add'),
@@ -133,7 +138,7 @@ let ten = 10;
           const Token.rParen(),
           const Token.semicolon(),
           const Token.bang(),
-          const Token.minus(),
+          const Token.dash(),
           const Token.slash(),
           const Token.asterisk(),
           const Token.int('5'),
@@ -144,24 +149,24 @@ let ten = 10;
           const Token.greaterThan(),
           const Token.int('5'),
           const Token.semicolon(),
-          Token.if_(),
+          const Token.if_(),
           const Token.lParen(),
           const Token.int('5'),
           const Token.lessThan(),
           const Token.int('10'),
           const Token.rParen(),
           const Token.lSquirly(),
-          Token.return_(),
-          Token.true_(),
+          const Token.return_(),
+          const Token.true_(),
           const Token.semicolon(),
           const Token.rSquirly(),
-          Token.else_(),
+          const Token.else_(),
           const Token.lSquirly(),
-          Token.return_(),
-          Token.false_(),
+          const Token.return_(),
+          const Token.false_(),
           const Token.semicolon(),
           const Token.rSquirly(),
-          // 10 == 10; 
+          // 10 == 10;
           const Token.int('10'),
           const Token.equal(),
           const Token.int('10'),
@@ -171,7 +176,7 @@ let ten = 10;
           const Token.notEqual(),
           const Token.int('9'),
           const Token.semicolon(),
-          Token.eof(),
+          const Token.eof(),
         ]
       };
     });
@@ -180,7 +185,7 @@ let ten = 10;
       'should return an array of Tokens given the input of tests map',
       () async {
         // arrange - act - assert
-        tests.forEach((key, value) {
+        positiveTests.forEach((key, value) {
           final inputStream = key;
           final expected = value;
           final lexer = Lexer(inputStream);
@@ -190,6 +195,36 @@ let ten = 10;
             expect(actual, expectation);
           }
         });
+      },
+    );
+
+    test(
+      'should return an illegal token for the ~ character',
+      () async {
+        // arrange - act - assert
+        negativeTests.forEach((key, value) {
+          final inputStream = key;
+          final expected = value;
+          final lexer = Lexer(inputStream);
+          for (final expectation in expected) {
+            final actual = lexer.nextToken();
+            logger.info('expectation: $expectation  <=> actual: $actual');
+            expect(actual, expectation);
+          }
+        });
+      },
+    );
+  });
+
+  group('mock lexer', () {
+    test(
+      'should ',
+      () async {
+        // arrange
+
+        // act
+
+        // assert
       },
     );
   });

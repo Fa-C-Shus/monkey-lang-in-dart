@@ -13,6 +13,7 @@
 import 'package:monkeydart/monkeydart.dart';
 
 final whitespaceRegex = RegExp(r'\s');
+const stringNull = '\u0000';
 
 extension GreaterThanOrEqualTo on Comparable<String> {
   bool operator >=(String other) {
@@ -26,10 +27,13 @@ extension LessThanOrEqualTo on Comparable<String> {
   }
 }
 
+/// returns true when the string has exactly one char and that char is a digit
 bool isDigit(String val) {
   return val.length == 1 && val >= '0' && val <= '9';
 }
 
+/// returns true when the string has exactly one char and that char is a
+/// letter or underscore
 bool isAlpha(String val) {
   return val.length == 1 && (val >= 'a' && val <= 'z') ||
       (val >= 'A' && val <= 'Z') ||
@@ -55,8 +59,8 @@ class Lexer {
 
     switch (currChar) {
       case null:
-      case '\u0000':
-        retVal = Token.eof();
+      case stringNull:
+        retVal = const Token.eof();
       case '{':
         retVal = const Token.lSquirly();
       case '}':
@@ -72,7 +76,7 @@ class Lexer {
       case '+':
         retVal = const Token.plus();
       case '-':
-        retVal = const Token.minus();
+        retVal = const Token.dash();
       case '*':
         retVal = const Token.asterisk();
       case '/':
@@ -110,7 +114,7 @@ class Lexer {
         final ynt = _readInteger();
         return Token.int(ynt);
       default:
-        retVal = Token.illegal();
+        retVal = const Token.illegal();
     }
     // eat the character
     _readChar();
@@ -119,7 +123,7 @@ class Lexer {
 
   String _peekChar() {
     if (readPosition >= sourceLength) {
-      return String.fromCharCode(0);
+      return stringNull;
     } else {
       return source[readPosition];
     }
@@ -127,7 +131,8 @@ class Lexer {
 
   void _readChar() {
     if (readPosition >= sourceLength) {
-      currChar = String.fromCharCode(0);
+      // coverage:ignore-line to ignore one line.
+      currChar = stringNull;
     } else {
       currChar = source[readPosition];
     }
@@ -150,7 +155,7 @@ class Lexer {
     final startHere = position;
     var len = 0;
 
-    while (isDigit(currChar ?? String.fromCharCode(0))) {
+    while (isDigit(currChar ?? stringNull)) {
       _readChar();
       len++;
     }

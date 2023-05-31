@@ -1,6 +1,6 @@
 very_good create dart_cli monkeydart --description "Thorsten Ball monkey interpreter written in Dart" --publishable --executable-name mkay
 
-dart pub add equatable 
+dart pub add equatable meta
 
 git init
 git add . && git commit -m "Empty starter project"

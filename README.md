@@ -24,14 +24,23 @@ Or locally via:
 dart pub global activate --source=path <path to this package>
 ```
 
+## Build locally
+source: (https://dart.dev/tools/dart-compile)
+
+```sh
+$ dart compile ./bin/mkay.dart
+# Generates: ./bin/mkay.exe
+```
+
+
 ## Usage
 
 ```sh
-# Sample command
-$ mkay sample
+# Lexer command - some environments will expand the arguments, so escaping may be required
+$ mkay lexer let x = 5;
 
 # Sample command option
-$ mkay sample --cyan
+$ mkay lexer --file ./test/fictures/example.txt
 
 # Show CLI version
 $ mkay --version

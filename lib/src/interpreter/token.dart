@@ -11,6 +11,7 @@
  */
 
 import 'package:equatable/equatable.dart';
+import 'package:monkeydart/monkeydart.dart';
 
 class Token extends Equatable {
   // variable values
@@ -18,34 +19,34 @@ class Token extends Equatable {
   const Token.int(this.value) : type = TokenType.int;
 
   // keywords
-  Token.let()
+  const Token.let()
       : type = TokenType.let,
-        value = String.fromCharCode(0);
-  Token.function()
+        value = 'let';
+  const Token.function()
       : type = TokenType.function,
-        value = String.fromCharCode(0);
-  Token.true_()
+        value = 'fn';
+  const Token.true_()
       : type = TokenType.true_,
-        value = String.fromCharCode(0);
-  Token.false_()
+        value = 'true';
+  const Token.false_()
       : type = TokenType.false_,
-        value = String.fromCharCode(0);
-  Token.if_()
+        value = 'false';
+  const Token.if_()
       : type = TokenType.if_,
-        value = String.fromCharCode(0);
-  Token.else_()
+        value = 'if';
+  const Token.else_()
       : type = TokenType.else_,
-        value = String.fromCharCode(0);
-  Token.return_()
+        value = 'else';
+  const Token.return_()
       : type = TokenType.return_,
-        value = String.fromCharCode(0);
+        value = 'return';
 
-  Token.illegal()
+  const Token.illegal()
       : type = TokenType.illegal,
-        value = String.fromCharCode(0);
-  Token.eof()
+        value = stringNull;
+  const Token.eof()
       : type = TokenType.eof,
-        value = String.fromCharCode(0);
+        value = stringNull;
 
   const Token.assign()
       : type = TokenType.assign,
@@ -59,8 +60,8 @@ class Token extends Equatable {
   const Token.plus()
       : type = TokenType.plus,
         value = '+';
-  const Token.minus()
-      : type = TokenType.minus,
+  const Token.dash()
+      : type = TokenType.dash,
         value = '-';
   const Token.bang()
       : type = TokenType.bang,
@@ -100,7 +101,7 @@ class Token extends Equatable {
   final TokenType type;
 
   @override
-  String toString() => '(${type.name} . $value)';
+  String toString() => '<${type.name}> => $value';
 
   static Token? keyword(String ident) {
     final map = {
@@ -116,19 +117,19 @@ class Token extends Equatable {
     final type = map[ident];
     if (type != null) {
       if (type == TokenType.let) {
-        return Token.let();
+        return const Token.let();
       } else if (type == TokenType.function) {
-        return Token.function();
+        return const Token.function();
       } else if (type == TokenType.if_) {
-        return Token.if_();
+        return const Token.if_();
       } else if (type == TokenType.else_) {
-        return Token.else_();
+        return const Token.else_();
       } else if (type == TokenType.return_) {
-        return Token.return_();
+        return const Token.return_();
       } else if (type == TokenType.true_) {
-        return Token.true_();
+        return const Token.true_();
       } else if (type == TokenType.false_) {
-        return Token.false_();
+        return const Token.false_();
       }
     }
 
@@ -154,7 +155,7 @@ enum TokenType {
   lSquirly,
   rSquirly,
   function,
-  minus,
+  dash,
   bang,
   asterisk,
   slash,
@@ -170,4 +171,3 @@ enum TokenType {
   // eq,
   // neq,
 }
-

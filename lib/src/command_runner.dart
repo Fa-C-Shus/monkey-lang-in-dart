@@ -39,7 +39,7 @@ class MonkeydartCommandRunner extends CompletionCommandRunner<int> {
       );
 
     // Add sub commands
-    addCommand(SampleCommand(logger: _logger));
+    addCommand(LexerCommand(logger: _logger));
     addCommand(UpdateCommand(logger: _logger, pubUpdater: _pubUpdater));
   }
 
@@ -52,6 +52,7 @@ class MonkeydartCommandRunner extends CompletionCommandRunner<int> {
   @override
   Future<int> run(Iterable<String> args) async {
     try {
+      _logger.alert(args.toList().toString());
       final topLevelResults = parse(args);
       if (topLevelResults['verbose'] == true) {
         _logger.level = Level.verbose;
