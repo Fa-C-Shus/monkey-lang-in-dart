@@ -54,7 +54,7 @@ $ mkay --help
 To run all unit tests use the following command:
 
 ```sh
-$ dart pub global activate coverage 1.6.3
+$ dart pub global activate coverage 1.2.0
 $ dart run test --coverage=./coverage
 $ dart pub global run coverage:format_coverage --packages=.dart_tool/package_config.json --report-on=lib --lcov -o ./coverage/lcov.info 
 ```

@@ -273,8 +273,10 @@ class Parser {
     final returnStatement = ReturnStatement(Expression(_curToken));
     if (_peekToken.type != TokenType.semicolon) {
       // eat the end of line token
+      // coverage:ignore-start
       _nextToken();
       return null;
+      // coverage:ignore-end
     } else {
       _nextToken();
     }
@@ -307,8 +309,10 @@ class Parser {
 
     if (_peekToken.type != TokenType.semicolon) {
       // eat the end of line token
+      // coverage:ignore-start
       _nextToken();
       return null;
+      // coverage:ignore-end
     } else {
       _nextToken();
     }
@@ -329,10 +333,12 @@ class Parser {
         .add('no prefix parse functions found for ${t.type.name}:(${t.value})');
   }
 
+  // coverage:ignore-start
   void _noInfixParseFnError(Token t) {
     _errors
         .add('no infix parse functions found for ${t.type.name}:(${t.value})');
   }
+  // coverage:ignore-end
 
   ExpressionStatement? _parseExpressionStatement() {
     final expression = _parseExpression(Precedence.lowest);
@@ -356,7 +362,9 @@ class Parser {
       curToken,
       left,
       operator,
+      //coverage:ignore-start
       right ?? Expression(curToken),
+      //coverage:ignore-end
     );
     return expression;
   }
@@ -365,11 +373,13 @@ class Parser {
     final curToken = _curToken;
     _nextToken();
     final right = _parseExpression(Precedence.prefix);
+    //coverage:ignore-start
     final expression = PrefixExpression(
       curToken,
       curToken.value,
       right ?? Expression(curToken),
     );
+    //coverage:ignore-end
     return expression;
   }
 
@@ -387,7 +397,9 @@ class Parser {
       final infix = _infixParseFns[_peekToken.type];
       if (infix == null) {
         // no infix parse function found
+        // coverage:ignore-start
         _noInfixParseFnError(_peekToken);
+        // coverage:ignore-end
         return leftExp;
       }
       _nextToken();

@@ -9,7 +9,6 @@
 /// ```
 library monkeydart;
 
-export './src/interpreter/eval_exception.dart' show EvalException;
 export './src/interpreter/lexer.dart' show Lexer, stringNull;
 export './src/interpreter/parser.dart'
     show

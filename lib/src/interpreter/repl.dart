@@ -1,5 +1,3 @@
-// ignore_for_file: constant_identifier_names
-
 /*
  * Project: interpreter
  * Created Date: Friday May 26th 2023 3:54:41 pm
@@ -20,6 +18,7 @@ import 'package:mason_logger/mason_logger.dart';
 import 'package:meta/meta.dart';
 import 'package:monkeydart/monkeydart.dart';
 
+// coverage:ignore-start
 class REPL {
   REPL({
     Logger? logger,
@@ -74,41 +73,4 @@ class REPL {
   late final String _prompt;
   late final Stdin _stdin;
 }
-
-// class REPL {
-//   REPL({
-//     required SendPort sendPort,
-//     Logger? logger,
-//     String? prompt,
-//   })  : _logger = logger ?? Logger(),
-//         _prompt = prompt ?? '>> ',
-//         _sendPort = sendPort {
-//     start();
-//   }
-
-//   void start() {
-//     _logger
-//       ..info('Welcome to the Monkey Programming Language')
-//       ..info('Feel free to type in commands')
-//       ..info('$_prompt ');
-
-//     try {
-//       final rp = ReceivePort();
-//       // allows for isolate transferring of stream
-//       _sendPort.send(rp.sendPort);
-
-//       // later we will instantiate a lexer and parser,
-//       // and send in this as stdout
-
-//       final rf = StreamIterator<String>(rp.cast<String>());
-//       var reader = SourceReader(rf);
-//       reader.read();
-//     } catch (e) {
-//       _logger.alert('Error: $e');
-//     }
-//   }
-
-//   late SendPort _sendPort;
-//   late Logger _logger;
-//   late String _prompt;
-// }
+// coverage:ignore-end

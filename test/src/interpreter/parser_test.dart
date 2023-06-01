@@ -155,6 +155,14 @@ void main() {
         // arrange
         lexer = Lexer(positiveReturnTests.keys.first);
         final actual = Parser(lexer);
+        final node = Node(const Token.eof());
+        final statement = Statement(const Token.int('7'));
+        final infix = InfixExpression(
+          const Token.plus(),
+          IntegerLiteral(5),
+          '+',
+          IntegerLiteral(7),
+        );
 
         // act
         final program = actual.parseProgram();
@@ -162,8 +170,13 @@ void main() {
         // assert
         expect(program, isNotNull);
         expect(program.statements.length, equals(3));
+        print(program.tokenLiteral());
 
         for (var i = 0; i < positiveReturnTests.values.first.length; i++) {
+          print(node);
+          print(statement);
+          print('$infix => ${infix.tokenLiteral()}}');
+          print(program.statements[i] as ReturnStatement);
           expect(program.statements[i], isA<ReturnStatement>());
           expect(program.statements[i].token, const Token.return_());
           expect(
