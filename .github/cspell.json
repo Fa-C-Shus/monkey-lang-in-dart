@@ -12,14 +12,9 @@
       "name": "vgv_forbidden",
       "path": "https://raw.githubusercontent.com/verygoodopensource/very_good_dictionaries/main/forbidden.txt",
       "description": "Forbidden VGV Spellings"
-    },
-    {
-      "name": "project-words",
-      "path": "./project-words.txt",
-      "description": "Word that fail spell check but are legtimate words in the project.",
-      "addWords": true
     }
   ],
   "useGitignore": true,
-  "words": []
+  "words": [
+  ]
 }
