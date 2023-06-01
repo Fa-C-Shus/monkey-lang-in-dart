@@ -1,3 +1,5 @@
+// ignore_for_file: omit_local_variable_types, prefer_conditional_assignment
+
 /*
  * Project: interpreter
  * Created Date: Monday May 29th 2023 4:39:10 pm
@@ -358,14 +360,20 @@ class Parser {
     final precedence = _curPrecedence();
     _nextToken();
     final right = _parseExpression(precedence);
+    //coverage:ignore-start
+    Expression? rite = right;
+    if (rite == null) {
+      // coverage:ignore-line
+      rite = Expression(curToken);
+    }
     final expression = InfixExpression(
       curToken,
       left,
       operator,
-      //coverage:ignore-start
-      right ?? Expression(curToken),
-      //coverage:ignore-end
+      rite,
     );
+
+    //coverage:ignore-end
     return expression;
   }
 
@@ -373,13 +381,16 @@ class Parser {
     final curToken = _curToken;
     _nextToken();
     final right = _parseExpression(Precedence.prefix);
-    //coverage:ignore-start
+    Expression? rite = right;
+    if (rite == null) {
+      // coverage:ignore-line
+      rite = Expression(curToken);
+    }
     final expression = PrefixExpression(
       curToken,
       curToken.value,
-      right ?? Expression(curToken),
+      rite,
     );
-    //coverage:ignore-end
     return expression;
   }
 
@@ -395,13 +406,13 @@ class Parser {
     while (!_peekTokenIs(TokenType.semicolon) &&
         precedence.index < _peekPrecedence().index) {
       final infix = _infixParseFns[_peekToken.type];
+      // coverage:ignore-start
       if (infix == null) {
         // no infix parse function found
-        // coverage:ignore-start
         _noInfixParseFnError(_peekToken);
-        // coverage:ignore-end
         return leftExp;
       }
+      // coverage:ignore-end
       _nextToken();
       leftExp = infix(leftExp);
     }

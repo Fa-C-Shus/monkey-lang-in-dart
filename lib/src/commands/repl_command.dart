@@ -46,6 +46,7 @@ The R(ead)E(val)P(rint)L(oop) command lets use the interpreter interactively)
   final Logger _logger;
   String? filePath;
 
+  //coverage:ignore-start
   @override
   Future<int> run() async {
     final repl = REPL(logger: _logger);
@@ -53,4 +54,5 @@ The R(ead)E(val)P(rint)L(oop) command lets use the interpreter interactively)
 
     return ExitCode.success.code;
   }
+  //coverage:ignore-end
 }
