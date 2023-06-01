@@ -47,13 +47,17 @@ class Node {
 
   @override
   String toString() {
-    return '${token.type.name} ${token.value}}';
+    return '${token.type.name} ${token.value}';
   }
 }
 
 /// Statements do not return values
 class Statement extends Node {
   Statement(super.token);
+  @override
+  String toString() {
+    return token.value;
+  }
 }
 
 /// Expressions return values
@@ -94,7 +98,8 @@ class ExpressionStatement extends Statement {
   final Expression expression;
   @override
   String toString() {
-    return expression.token.value;
+    final retVal = StringBuffer(expression);
+    return retVal.toString();
   }
 }
 
@@ -102,9 +107,10 @@ class PrefixExpression extends Expression {
   PrefixExpression(super.token, this.operator, this.right);
   final String operator;
   final Expression right;
+
   @override
   String toString() {
-    return '($operator ${right.tokenLiteral()})';
+    return '($operator$right)';
   }
 }
 
@@ -118,9 +124,15 @@ class InfixExpression extends Expression {
   final Expression left;
   final String operator;
   final Expression right;
+
+  @override
+  String tokenLiteral() {
+    return token.value;
+  }
+
   @override
   String toString() {
-    return '(${left.tokenLiteral()} $operator ${right.tokenLiteral()})';
+    return '($left $operator $right)';
   }
 }
 
@@ -137,7 +149,7 @@ class Program extends Node {
 
   @override
   String toString() {
-    return statements.join('\n');
+    return statements.join('');
   }
 }
 

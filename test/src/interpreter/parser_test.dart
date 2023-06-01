@@ -28,6 +28,56 @@ class InfixTrial {
   final int rightOperand;
 }
 
+/* ===========================
+Test Helper Functions
+=========================== */ 
+
+bool testIntegerLiteral(dynamic actual, int value) {
+  expect(actual, isA<IntegerLiteral>());
+  expect((actual as IntegerLiteral).value, equals(value));
+  expect(actual.tokenLiteral(), equals(value.toString()));
+  return true;
+}
+
+bool testIdentifier(dynamic actual, String value) {
+  expect(actual, isA<Identifier>());
+  expect((actual as Identifier).value, equals(value));
+  expect(actual.tokenLiteral(), equals(value));
+  return true;
+}
+
+bool testLiteralExpression(dynamic actual, dynamic expected) {
+  if (expected is int) {
+    return testIntegerLiteral(actual, expected);
+  } else if (expected is String) {
+    return testIdentifier(actual, expected);
+  // } else if (expected is bool) {
+  //   return testBooleanLiteral(actual, expected);
+  }
+  throw Exception('type of actual not handled');
+}
+
+bool testInfixExpression(
+  dynamic actual,
+  dynamic left,
+  String operator,
+  dynamic right,
+) {
+  expect(actual, isA<InfixExpression>());
+  expect((actual as InfixExpression).operator, equals(operator));
+  testLiteralExpression((actual as InfixExpression).left, left);
+  testLiteralExpression((actual as InfixExpression).right, right);
+  return true;
+}
+
+// bool testBooleanLiteral(dynamic actual, bool value) {
+//   expect(actual, isA<BooleanLiteral>());
+//   expect((actual as BooleanLiteral).value, equals(value));
+//   expect(actual.tokenLiteral(), equals(value.toString()));
+//   return true;
+// }
+
+
 void main() {
   group('Parser', () {
     // late Logger logger;
@@ -316,6 +366,51 @@ void main() {
             trial.rightOperand.toString(),
           );
         }
+      },
+    );
+  });
+
+  group('Parser - order of precedence', () {
+    late Lexer lexer;
+    late Map<String, String> positiveTests;
+    setUp(() {
+      positiveTests = {
+        '!-a;': '(!(-a))',
+        '!-a+b;': '((!(-a)) + b)',
+        'a + b + c;': '((a + b) + c)',
+        'a + b - c;': '((a + b) - c)',
+        'a * b * c;': '((a * b) * c)',
+        'a * b / c;': '((a * b) / c)',
+        'a + b / c;': '(a + (b / c))',
+        'a + b * c + d / e - f;': '(((a + (b * c)) + (d / e)) - f)',
+        '3 + 4; -5 * 5;': '(3 + 4)((-5) * 5)',
+        '5 > 4 == 3 < 4;': '((5 > 4) == (3 < 4))',
+        '5 < 4 != 3 > 4;': '((5 < 4) != (3 > 4))',
+        '3 + 4 * 5 == 3 * 1 + 4 * 5;': '((3 + (4 * 5)) == ((3 * 1) + (4 * 5)))',
+      };
+    });
+
+    test(
+      'should return the value string for each key in the tests map',
+      () async {
+        // arrange
+        for (final item in positiveTests.entries) {
+          lexer = Lexer(item.key);
+          final parser = Parser(lexer);
+          // act
+          final program = parser.parseProgram();
+          final actual = program.toString();
+          for (final stmt in program.statements) {
+            print('${item.key} => ${stmt}');
+          }
+          // assert
+          expect(parser.errors, isEmpty);
+          expect(actual, item.value);
+        }
+
+        // act
+
+        // assert
       },
     );
   });

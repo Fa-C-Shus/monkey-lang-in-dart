@@ -41,25 +41,6 @@ class REPL {
         stdout.write(_prompt);
         final line = _stdin.readLineSync(encoding: utf8);
         await evalLine(line);
-
-        // switch (line?.trim().toLowerCase()) {
-        //   case null:
-        //     continue;
-        //   case 'exit':
-        //     _logger.warn('Bye!');
-        //     exit(0);
-        //   default:
-        //     final lexer = Lexer(line!);
-        //     final tokens = <Token>[];
-        //     var token = lexer.nextToken();
-        //     while (token.type != TokenType.eof) {
-        //       tokens.add(token);
-        //       token = lexer.nextToken();
-        //     }
-        //     for (final element in tokens) {
-        //       _logger.info(element.toString());
-        //     }
-        // }
       }
     } catch (e) {
       _logger.alert('Error: $e');
@@ -83,6 +64,7 @@ class REPL {
           token = lexer.nextToken();
         }
         for (final element in tokens) {
+          // stdout.writeln(element.toString());
           _logger.info(element.toString());
         }
     }

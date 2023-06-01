@@ -40,6 +40,7 @@ class MonkeydartCommandRunner extends CompletionCommandRunner<int> {
 
     // Add sub commands
     addCommand(LexerCommand(logger: _logger));
+    addCommand(ReplCommand(logger: _logger));
     addCommand(UpdateCommand(logger: _logger, pubUpdater: _pubUpdater));
   }
 
