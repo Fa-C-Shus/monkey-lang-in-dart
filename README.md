@@ -40,7 +40,7 @@ $ dart compile ./bin/mkay.dart
 $ mkay lexer let x = 5;
 
 # Sample command option
-$ mkay lexer --file ./test/fictures/example.txt
+$ mkay lexer --file ./test/fixtures/example.txt
 
 # Show CLI version
 $ mkay --version

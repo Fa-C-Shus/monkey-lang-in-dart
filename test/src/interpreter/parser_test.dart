@@ -192,9 +192,7 @@ void main() {
   });
 
   group('Parser toString()', () {
-
-    setUp(() {
-    });
+    setUp(() {});
 
     test(
       'should return a string representation of the program',
@@ -321,8 +319,7 @@ void main() {
           final program = parser.parseProgram();
           for (final stmt in program.statements) {
             print(
-              (stmt as ExpressionStatement).expression
-                  as InfixExpression,
+              (stmt as ExpressionStatement).expression as InfixExpression,
             );
           }
           expect(program.statements.length, 1);
