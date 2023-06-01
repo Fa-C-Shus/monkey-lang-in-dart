@@ -37,8 +37,7 @@ class ReplCommand extends Command<int> {
   }
 
   @override
-  String get description =>
-      '''
+  String get description => '''
 The R(ead)E(val)P(rint)L(oop) command lets use the interpreter interactively)
 ''';
 

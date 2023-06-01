@@ -31,7 +31,7 @@ void main() {
       'should return snarky message when no arguments are passed',
       () async {
         // arrange
-    
+
         // act
         final exitCode = await commandRunner.run(['lexer']);
 

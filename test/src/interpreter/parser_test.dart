@@ -30,7 +30,7 @@ class InfixTrial {
 
 /* ===========================
 Test Helper Functions
-=========================== */ 
+=========================== */
 
 bool testIntegerLiteral(dynamic actual, int value) {
   expect(actual, isA<IntegerLiteral>());
@@ -51,8 +51,8 @@ bool testLiteralExpression(dynamic actual, dynamic expected) {
     return testIntegerLiteral(actual, expected);
   } else if (expected is String) {
     return testIdentifier(actual, expected);
-  // } else if (expected is bool) {
-  //   return testBooleanLiteral(actual, expected);
+    // } else if (expected is bool) {
+    //   return testBooleanLiteral(actual, expected);
   }
   throw Exception('type of actual not handled');
 }
@@ -76,7 +76,6 @@ bool testInfixExpression(
 //   expect(actual.tokenLiteral(), equals(value.toString()));
 //   return true;
 // }
-
 
 void main() {
   group('Parser', () {
