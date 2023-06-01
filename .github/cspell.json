@@ -1,7 +1,7 @@
 {
   "version": "0.2",
   "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
-  "dictionaries": ["vgv_allowed", "vgv_forbidden"],
+  "dictionaries": ["vgv_allowed", "vgv_forbidden", "project-words"],
   "dictionaryDefinitions": [
     {
       "name": "vgv_allowed",
@@ -12,6 +12,12 @@
       "name": "vgv_forbidden",
       "path": "https://raw.githubusercontent.com/verygoodopensource/very_good_dictionaries/main/forbidden.txt",
       "description": "Forbidden VGV Spellings"
+    },
+    {
+      "name": "project-words",
+      "path": "./project-words.txt",
+      "description": "Additinal words for this project",
+      "addWords": true
     }
   ],
   "useGitignore": true,
