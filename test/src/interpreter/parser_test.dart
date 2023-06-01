@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_cast, avoid_print
+
 /*
  * Project: interpreter
  * Created Date: Monday May 29th 2023 6:31:52 pm
@@ -190,10 +192,8 @@ void main() {
   });
 
   group('Parser toString()', () {
-    late String input;
 
     setUp(() {
-      input = 'let myVar = AnotherVar;';
     });
 
     test(
@@ -321,7 +321,7 @@ void main() {
           final program = parser.parseProgram();
           for (final stmt in program.statements) {
             print(
-              (program.statements.first as ExpressionStatement).expression
+              (stmt as ExpressionStatement).expression
                   as InfixExpression,
             );
           }
@@ -400,7 +400,7 @@ void main() {
           final program = parser.parseProgram();
           final actual = program.toString();
           for (final stmt in program.statements) {
-            print('${item.key} => ${stmt}');
+            print('${item.key} => $stmt');
           }
           // assert
           expect(parser.errors, isEmpty);

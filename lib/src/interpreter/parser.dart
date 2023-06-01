@@ -149,7 +149,7 @@ class Program extends Node {
 
   @override
   String toString() {
-    return statements.join('');
+    return statements.join();
   }
 }
 
